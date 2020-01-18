@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 def basic_exploration(df):
     '''
@@ -11,7 +12,11 @@ def basic_exploration(df):
 
     return:
     --------
-    print all information
+    None
+
+    Print:
+    --------
+    print all exploration information
 
     '''
 
@@ -44,8 +49,25 @@ def basic_exploration(df):
         lb=per_25-(1.5*iqr)
         print(i,':',[j for j in df[i] if j>ub or j<lb])
     print('*'*50)
-if __name__ == "__main__":
-    #df=pd.read_csv('Data_Science_Started_Practice_Notebook/titanic/titanic.csv')
-    df=pd.read_csv('/home/kalpesh/GreyAtom/Data_Science_Started_Practice_Notebook/titanic/titanic.csv')
-    basic_exploration(df)
+
+
+
+def eda(df):
+    '''
+    find basic exploratory data analysis
+
+    param:
+    ---------------
+    Pandas DataFrame
+
+    return:
+    ---------------
+    None
+
+    show:
+    ---------------
+    eda related plots
+    '''
+
+
     
