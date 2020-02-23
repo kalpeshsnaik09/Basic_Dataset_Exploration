@@ -61,8 +61,11 @@ def cont_numeric(df,col):
 
     plt.figure(figsize=(15,8))
     sns.distplot(df[col],bins=dynamic_bins)
-    sns
+    plt.axvline(mean, color='r', linestyle='--')
+    plt.axvline(median, color='g', linestyle='-')
     plt.show()
     plt.figure(figsize=(15,8))
     sns.boxplot(df[col])
+    plt.axvline(mean, color='r', linestyle='--')
+    plt.axvline(median, color='g', linestyle='-')
     plt.show()
