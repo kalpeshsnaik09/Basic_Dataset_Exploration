@@ -41,9 +41,9 @@ def cont_numeric(df,col):
     #z_statistics,p=normaltest(df[col])
     normality_test=normaltest(df[col])
     # if p<0.05:
-    #     normality_test='reject null hypothesis (H0)'
+    #     normality_test='reject null hypothesis (H0)' # not normaly distributed
     # else:
-    #     normality_test='faild to reject null hypothesis assume alternate hypothesis correct'
+    #     normality_test='faild to reject null hypothesis assume alternate hypothesis correct' # normaly distributed
     
     print('Column Name : {}'.format(col))
     print('Mean : {}'.format(mean))
