@@ -41,9 +41,9 @@ def cont_numeric(df,col):
     #z_statistics,p=normaltest(df[col])
     normality_test=normaltest(df[col])
     # if p<0.05:
-    #     normality_test='reject null hypothesis (H0)' # not normaly distributed
+    #     normality_test='reject null hypothesis (H0). not normaly distributed' # not normaly distributed
     # else:
-    #     normality_test='faild to reject null hypothesis assume alternate hypothesis correct' # normaly distributed
+    #     normality_test='faild to reject null hypothesis (H0) assume alternate hypothesis (H1). correct normaly distributed' # normaly distributed
     
     print('Column Name : {}'.format(col))
     print('Mean : {}'.format(mean))
@@ -61,6 +61,7 @@ def cont_numeric(df,col):
 
     plt.figure(figsize=(15,8))
     sns.distplot(df[col],bins=dynamic_bins)
+    sns
     plt.show()
     plt.figure(figsize=(15,8))
     sns.boxplot(df[col])
