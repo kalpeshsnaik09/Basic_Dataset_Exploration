@@ -8,6 +8,8 @@ from scipy.stats import shapiro
 from scipy.stats import skew
 from scipy.stats import normaltest
 from scipy.stats import kurtosis
+from scipy.stats import pearsonr
+from statsmodels.graphics.gofplots import qqplot
 
 
 def cont_numeric(df,col):
@@ -69,3 +71,90 @@ def cont_numeric(df,col):
     plt.axvline(mean, color='r', linestyle='--')
     plt.axvline(median, color='g', linestyle='-')
     plt.show()
+
+
+
+
+def num_num_scatter(df,col_x,col_y):
+    '''
+    plot the Scatter Plot of given Input and Output column
+
+    param:
+        df    : Dataset Variable
+        col_x : Input Column Name
+        col_y : Output Column Name
+    
+    return:
+        None
+
+    print:
+        Perason Correlation Coefficient
+
+    display:
+        show plots
+    '''
+
+    # Print Perason Correlation Coefficient
+    pea_corr=df[col_y].corr(df[col_x])
+    print('Perason Correlation Coefficient between {} and {} : {}'.format(col_y,col_x,pea_corr))
+    print('Perason Correlation Coefficient Square between {} and {} : {}'.format(col_y,col_x,pea_corr**2))
+
+
+    plt.figure(figsize=(15,8))
+    # sns.regplot(x=df[col_x],y=df[col_y])
+    sns.jointplot(df[col_x], df[col_y], kind="reg", stat_func=r2)
+    # plt.title('Scatter plot of {} vs {}'.format(col_y,col_x))
+    plt.show()
+    
+
+# Multi colinearity detection
+def plot_heatmap(df, fig_size=(10, 7)):
+    fig = plt.figure(figsize=fig_size)
+    sns.heatmap(df.corr(), annot=True)
+    plt.title('Heatmap for detecting multicollinearity', fontsize=16, color='navy')
+    plt.show()
+
+# for simple linear regrassion
+def r2(x, y):
+    return pearsonr(x, y)[0] ** 2
+
+def normality_plots(df, col):
+    fig = plt.figure(figsize=(15, 5))
+    shapiro_p = round(shapiro(df[col])[1], 2)
+    normaltest_p = round(normaltest(df[col])[1], 2)
+    plt.subplot(1, 3, 1)
+    plt.title('Histogram for '+col, color='navy', fontsize=12)
+    plt.hist(df[col])
+    plt.subplot(1, 3, 2)
+    plt.title('Q-Q Plot for '+col, color='brown', fontsize=12)
+    qqplot(df[col], line='s', ax=plt.subplot(1, 3, 2))
+    plt.subplot(1, 3, 3)
+    plt.title('Normality Test Results for '+col, color='olive', fontsize=12)
+    plt.plot([shapiro_p, normaltest_p], linestyle=' ', marker='x')
+    plt.text(x=0.2, y=0.5, s='Shapiro\np value\n'+str(shapiro_p))
+    plt.text(x=0.6, y=0.5, s='Normaltest\np value\n'+str(normaltest_p))
+    plt.ylim((0, 1))
+    plt.hlines(y=0.05, color='r', xmin=0, xmax=1)
+    plt.suptitle('Normality Test for '+col, fontsize=16, color='b')
+    plt.show()
+
+def ml_normality_plots(col):    
+    fig = plt.figure(figsize=(15, 5))
+    shapiro_p = round(shapiro(col)[1], 2)
+    normaltest_p = round(normaltest(col)[1], 2)
+    plt.subplot(1, 3, 1)
+    plt.title('Histogram', color='navy', fontsize=12)
+    plt.hist(col)
+    plt.subplot(1, 3, 2)
+    plt.title('Q-Q Plot', color='brown', fontsize=12)
+    qqplot(col, line='s', ax=plt.subplot(1, 3, 2))
+    plt.subplot(1, 3, 3)
+    plt.title('Normality Test Results', color='olive', fontsize=12)
+    plt.plot([shapiro_p, normaltest_p], linestyle=' ', marker='x')
+    plt.text(x=0.2, y=0.5, s='Shapiro\np value\n'+str(shapiro_p))
+    plt.text(x=0.6, y=0.5, s='Normaltest\np value\n'+str(normaltest_p))
+    plt.ylim((0, 1))
+    plt.hlines(y=0.05, color='r', xmin=0, xmax=1)
+    plt.suptitle('Normality Test', fontsize=16, color='b')
+    plt.show()
+
