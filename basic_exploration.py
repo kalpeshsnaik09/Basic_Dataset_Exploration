@@ -56,7 +56,7 @@ def basic_exploration(df):
             iqr=per_75-per_25
             ub=per_75+(1.5*iqr)
             lb=per_25-(1.5*iqr)
-            print(i,':',[j for j in df[i] if j>ub or j<lb])
+            print(i,':',[j for j in df[i] if j>ub or j<lb],'\ncount :',len([j for j in df[i] if j>ub or j<lb]))
         print('*'*50)
     except Exception:
         print('No Numerical Column')
