@@ -34,21 +34,33 @@ def basic_exploration(df):
     print('*'*50)
 
     # Descriptive Statistics of Dataset
-    print('Decriptive Statistics of Numerical Columns:\n',df.describe(exclude='object'))
-    print('*'*50)
-    print('Decriptive Statistics of Categorical Columns:\n',df.describe(include='object'))
-    print('*'*50)
+    try:
+        print('Decriptive Statistics of Numerical Columns:\n',df.describe(exclude='object'))
+        print('*'*50)
+    except Exception:
+        print('No Numerical Column')
+        print('*'*50)
+    try:
+        print('Decriptive Statistics of Categorical Columns:\n',df.describe(include='object'))
+        print('*'*50)
+    except Exception:
+        print('No Categorical Column')
+        print('*'*50)
 
     # Outliers in Dataset
-    num_cols=df.select_dtypes(exclude='object').columns.values
-    for i in num_cols:
-        per_75=np.nanpercentile(df[i],75)
-        per_25=np.nanpercentile(df[i],25)
-        iqr=per_75-per_25
-        ub=per_75+(1.5*iqr)
-        lb=per_25-(1.5*iqr)
-        print(i,':',[j for j in df[i] if j>ub or j<lb])
-    print('*'*50)
+    try:
+        num_cols=df.select_dtypes(exclude='object').columns.values
+        for i in num_cols:
+            per_75=np.nanpercentile(df[i],75)
+            per_25=np.nanpercentile(df[i],25)
+            iqr=per_75-per_25
+            ub=per_75+(1.5*iqr)
+            lb=per_25-(1.5*iqr)
+            print(i,':',[j for j in df[i] if j>ub or j<lb])
+        print('*'*50)
+    except Exception:
+        print('No Numerical Column')
+        print('*'*50)
 
 
 
