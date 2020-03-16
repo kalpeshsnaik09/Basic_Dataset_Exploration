@@ -105,12 +105,37 @@ def num_num_scatter(df,col_x,col_y):
     sns.jointplot(df[col_x], df[col_y], kind="reg", stat_func=r2)
     # plt.title('Scatter plot of {} vs {}'.format(col_y,col_x))
     plt.show()
+
+
+
+def cat_plot(df,col):
+    '''
+    plot the Piechart and bargraph of given column
+
+    param:
+        df  : Dataset Variable
+        col : Column Name
+    
+    return:
+        None
+
+    display:
+        show plots
+    '''
+    fig,(ax1,ax2)=plt.subplots(1,2,figsize=(12,5))
+    fig.suptitle('Plots of {} column'.format(col))
+    ax1.pie(df[col].value_counts(),autopct='%2.2f')
+    ax1.set_title('Pie-Chart')
+    ax2.bar(df[col].value_counts().index,df[col].value_counts())
+    ax2.set_title('Bar-Graph')
+    fig.show()
     
 
 # Multi colinearity detection
 def plot_heatmap(df, fig_size=(10, 7)):
     fig = plt.figure(figsize=fig_size)
-    sns.heatmap(df.corr(), annot=True)
+    ax=sns.heatmap(df.corr(), annot=True)
+    ax.set_ylim(5.0,0.0)
     plt.title('Heatmap for detecting multicollinearity', fontsize=16, color='navy')
     plt.show()
 
